@@ -18,6 +18,5 @@ mongoose.connect(MONGO_URI)
     })
     .catch(err => console.log(err));
 
-app.get('/', (req, res) => res.send('Hello world');
 app.use('/api/users', userRoutes);
 app.use('/api/admin', adminRoutes);
