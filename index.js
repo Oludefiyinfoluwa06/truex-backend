@@ -26,4 +26,3 @@ mongoose.connect(MONGO_URI)
 app.get('/', (req, res) => res.send('Hello world'));
 app.use('/api/users', userRoutes);
 app.use('/api/admin', adminRoutes);
-app.use('/api/tasks', taskRoutes);
