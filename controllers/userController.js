@@ -3,19 +3,21 @@ const Setting = require('../models/setting');
 const getTotalCoins = require('../utils/coinUtils');
 
 const registerUser = async (req, res) => {
-    const { username } = req.body;
+    const { username, referrer } = req.body;
 
     try {
-        const existingUser = await User.findOne({ username });
+        const newUser = new User({ username });
 
-        if (existingUser) {
-            return res.status(400).json({ success: false, message: 'User already exists' });
+        if (referrer) {
+            referringUser = await User.findOne({ referrer });
+            newUser.referrer = referrer;
+            referringUser.referrals.push(newUser._id);
+            await referringUser.save();
         }
 
-        const newUser = new User({ username, coins: 0, referrals: 0, walletAddress: '' });
         await newUser.save();
 
-        res.status(201).json({ success: true, message: 'User registered successfully', user: newUser });
+        res.json({ success: true, message: 'User registered successfully', user: newUser });
     } catch (err) {
         console.error(err);
         res.status(500).json({ success: false, message: 'Error registering user' });
