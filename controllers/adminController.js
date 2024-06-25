@@ -2,7 +2,6 @@ const Task = require('../models/task');
 const Admin = require('../models/admin');
 const jwt = require('jsonwebtoken');
 
-// Create a new task
 const createTask = async (req, res) => {
     const { title, description, reward } = req.body;
 
@@ -22,6 +21,7 @@ const loginAdmin = async (req, res) => {
 
     try {
         const admin = await Admin.findOne({ email });
+        
         if (!admin) {
             return res.status(404).json({ success: false, message: 'Admin not found' });
         }
