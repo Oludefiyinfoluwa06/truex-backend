@@ -46,7 +46,7 @@ Route: `/api/admin/resetPassword`
 Example: (Using axios)  
 ```javascript
 const email = 'admin@gmail.com'; // Default email  
-const resetCode = 'a24f'; // Rest code  
+const resetCode = 'a24f'; // Reset code  
 const newPassword = '123456789'; // New password  
 axios.post(`https://truex-backend.vercel.app/api/admin/resetPassword`, { email, resetCode, newPassword });
 ```
