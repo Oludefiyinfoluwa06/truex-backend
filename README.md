@@ -31,6 +31,26 @@ const password = '123456789'; // Default password
 axios.post(`https://truex-backend.vercel.app/api/admin/login`, { username, email, password });
 ```
 
+## Request Password Reset Code
+Request: `POST`  
+Route: `/api/admin/requestResetCode`  
+Example: (Using axios)  
+```javascript
+const email = 'admin@gmail.com'; // Default email  
+axios.post(`https://truex-backend.vercel.app/api/admin/requestResetCode`, { email });
+```
+
+## Reset Password
+Request: `POST`  
+Route: `/api/admin/resetPassword`  
+Example: (Using axios)  
+```javascript
+const email = 'admin@gmail.com'; // Default email  
+const resetCode = 'a24f'; // Rest code  
+const newPassword = '123456789'; // New password  
+axios.post(`https://truex-backend.vercel.app/api/admin/resetPassword`, { email, resetCode, newPassword });
+```
+
 ## Create task  
 Request: `POST`  
 Route: `/api/tasks/create`  
