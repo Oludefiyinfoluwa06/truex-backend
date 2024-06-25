@@ -81,6 +81,28 @@ const checkUserTaskCompletion = async (req, res) => {
     }
 };
 
+const editTask = async (req, res) => {
+    const { taskId } = req.params;
+    const { title, description, reward } = req.body;
+
+    try {
+        const task = await Task.findByIdAndUpdate(
+            taskId,
+            { title, description, reward },
+            { new: true, runValidators: true }
+        );
+
+        if (!task) {
+            return res.status(404).json({ success: false, message: 'Task not found' });
+        }
+
+        res.json({ success: true, message: 'Task updated successfully', task });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: 'Error updating task' });
+    }
+};
+
 const deleteTask = async (req, res) => {
     const { taskId } = req.params;
 
@@ -104,5 +126,6 @@ module.exports = {
     getTask,
     completeTask,
     checkUserTaskCompletion,
+    editTask,
     deleteTask
 };

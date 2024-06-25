@@ -122,12 +122,12 @@ axios.get(`https://truex-backend.vercel.app/api/users/`, { headers: { 'Authoriza
 
 ## Update global earning limit (Admin)
 Request: `PUT`  
-Route: `/api/settings/globalEarningLimit`  
+Route: `/api/setting/globalEarningLimit`  
 Example: (Using axios)  
 ```javascript
 const newLimit = 1000000; // New global earning limit
 const token = 'admin-token'; // Saved in localstorage from admin login
-axios.put(`https://truex-backend.vercel.app/api/settings/globalEarningLimit`, { newLimit }, { headers: { 'Authorization': `Bearer ${token}` } });
+axios.put(`https://truex-backend.vercel.app/api/setting/globalEarningLimit`, { newLimit }, { headers: { 'Authorization': `Bearer ${token}` } });
 ```
 
 ## Delete task (Admin)
@@ -138,4 +138,17 @@ Example: (Using axios)
 const taskId = 'task-id'; // Get task id from parameter in frontend link
 const token = 'admin-token'; // Saved in local storage from admin login
 axios.delete(`https://truex-backend.vercel.app/api/tasks/delete/${taskId}`, { headers: { 'Authorization': `Bearer ${token}` } });
+```
+
+## Edit task (Admin)
+Request: `PUT`  
+Route: `/api/tasks/edit/:taskId`  
+Example: (Using axios)  
+```javascript
+const taskId = 'task-id'; // Get task id from parameter in frontend link
+const title = 'Updated Task Title'; // Updated task title from admin
+const description = 'Updated Task Description'; // Updated task description from admin
+const reward = 2000; // Updated task reward from admin
+const token = 'admin-token'; // Saved in local storage from admin login
+axios.put(`https://truex-backend.vercel.app/api/tasks/edit/${taskId}`, { title, description, reward }, { headers: { 'Authorization': `Bearer ${token}` } });
 ```
