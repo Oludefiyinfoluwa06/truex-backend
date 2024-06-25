@@ -10,7 +10,7 @@ const registerUser = async (req, res) => {
             return res.status(400).json({ success: false, message: 'User already exists' });
         }
 
-        const newUser = new User({ username, coins: 0, walletAddress: '' });
+        const newUser = new User({ username, coins: 0, referrals: 0, walletAddress: '' });
         await newUser.save();
 
         res.status(201).json({ success: true, message: 'User registered successfully', user: newUser });
