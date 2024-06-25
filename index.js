@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const userRoutes = require('./routes/users');
 const adminRoutes = require('./routes/admin');
+const taskRoutes = require('./routes/tasks');
 
 const app = express();
 
@@ -25,3 +26,4 @@ mongoose.connect(MONGO_URI)
 app.get('/', (req, res) => res.send('Hello world'));
 app.use('/api/users', userRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/tasks', taskRoutes);
