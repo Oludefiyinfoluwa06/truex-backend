@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const userRoutes = require('./routes/users');
 const adminRoutes = require('./routes/admin');
+const taskRoutes = require('./routes/tasks');
 
 const app = express();
 
