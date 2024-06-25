@@ -33,7 +33,7 @@ const title = 'Task title'; // Get from admin
 const description = 'This is the first task'; // Get from admin  
 const reward = '1000'; // Get from admin  
 const token = 'admin-token' // Saved in localstorage from admin login  
-axios.post(`https://truex-backend.vercel.app/api/tasks/create`, { username, email, password }, { ‘Authorization’: `Bearer ${token}` });  
+axios.post(`https://truex-backend.vercel.app/api/tasks/create`, { username, email, password }, { 'Authorization': `Bearer ${token}` });  
 
 ## Get task
 Request: `GET`  
