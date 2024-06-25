@@ -46,7 +46,7 @@ Route: `/api/admin/resetPassword`
 Example: (Using axios)  
 ```javascript
 const email = 'admin@gmail.com'; // Default email  
-const resetCode = 'a24f'; // Reset code  
+const resetCode = '1234'; // Reset code  
 const newPassword = '123456789'; // New password  
 axios.post(`https://truex-backend.vercel.app/api/admin/resetPassword`, { email, resetCode, newPassword });
 ```
@@ -128,4 +128,14 @@ Example: (Using axios)
 const newLimit = 1000000; // New global earning limit
 const token = 'admin-token'; // Saved in localstorage from admin login
 axios.put(`https://truex-backend.vercel.app/api/settings/globalEarningLimit`, { newLimit }, { headers: { 'Authorization': `Bearer ${token}` } });
+```
+
+## Delete task (Admin)
+Request: `DELETE`  
+Route: `/api/tasks/delete/:taskId`  
+Example: (Using axios)  
+```javascript
+const taskId = 'task-id'; // Get task id from parameter in frontend link
+const token = 'admin-token'; // Saved in local storage from admin login
+axios.delete(`https://truex-backend.vercel.app/api/tasks/delete/${taskId}`, { headers: { 'Authorization': `Bearer ${token}` } });
 ```

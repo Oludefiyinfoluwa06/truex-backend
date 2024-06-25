@@ -81,10 +81,28 @@ const checkUserTaskCompletion = async (req, res) => {
     }
 };
 
+const deleteTask = async (req, res) => {
+    const { taskId } = req.params;
+
+    try {
+        const task = await Task.findByIdAndDelete(taskId);
+
+        if (!task) {
+            return res.status(404).json({ success: false, message: 'Task not found' });
+        }
+
+        res.json({ success: true, message: 'Task deleted successfully' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: 'Error deleting task' });
+    }
+};
+
 module.exports = {
     createTask,
     getTasks,
     getTask,
     completeTask,
-    checkUserTaskCompletion
+    checkUserTaskCompletion,
+    deleteTask
 };
