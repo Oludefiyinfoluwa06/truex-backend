@@ -25,6 +25,18 @@ const getTasks = async (req, res) => {
     }
 };
 
+const getTask = async (req, res) => {
+    const { taskId } = req.params;
+
+    try {
+        const task = await Task.findById(taskId);
+        res.json({ success: true, task });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: 'Error fetching task' });
+    }
+};
+
 const completeTask = async (req, res) => {
     const { userId, taskId } = req.body;
 
@@ -42,7 +54,7 @@ const completeTask = async (req, res) => {
         await task.save();
 
         const user = await User.findById(userId);
-        user.coins += task.reward;
+        user.totalCoins += task.reward;
         await user.save();
 
         res.json({ success: true, message: 'Task completed successfully' });
@@ -52,8 +64,27 @@ const completeTask = async (req, res) => {
     }
 };
 
+const checkUserTaskCompletion = async (req, res) => {
+    const { userId, taskId } = req.body;
+
+    try {
+        const task = await Task.findById(taskId);
+        if (!task) {
+            return res.status(404).json({ success: false, message: 'Task not found' });
+        }
+
+        const hasCompleted = task.completedBy.includes(userId);
+        res.json({ success: true, hasCompleted });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: 'Error checking task completion' });
+    }
+};
+
 module.exports = {
     createTask,
     getTasks,
-    completeTask
+    getTask,
+    completeTask,
+    checkUserTaskCompletion
 };

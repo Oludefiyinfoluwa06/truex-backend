@@ -6,6 +6,7 @@ const cors = require('cors');
 const userRoutes = require('./routes/users');
 const adminRoutes = require('./routes/admin');
 const taskRoutes = require('./routes/tasks');
+const settingRoutes = require('./routes/setting');
 
 const app = express();
 
@@ -27,3 +28,4 @@ app.get('/', (req, res) => res.send('Hello world'));
 app.use('/api/users', userRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/tasks', taskRoutes);
+app.use('/api/setting', settingRoutes);
