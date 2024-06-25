@@ -1,6 +1,5 @@
-const User = require('../models/User');
+const User = require('../models/user');
 
-// Register a new user
 const registerUser = async (req, res) => {
     const { username } = req.body;
 
@@ -21,7 +20,6 @@ const registerUser = async (req, res) => {
     }
 };
 
-// Get user data
 const getUserData = async (req, res) => {
     const { userId } = req.params;
 
@@ -39,7 +37,6 @@ const getUserData = async (req, res) => {
     }
 };
 
-// Earn coins
 const earnCoins = async (req, res) => {
     const { userId, coinsEarned } = req.body;
 
