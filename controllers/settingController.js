@@ -8,13 +8,7 @@ const setGlobalEarningLimit = async (req, res) => {
     }
 
     try {
-        let setting = await Setting.findOne();
-
-        if (!setting) {
-            setting = new Setting({ globalEarningLimit: limit });
-        } else {
-            setting.globalEarningLimit = limit;
-        }
+        const setting = new Setting({ globalEarningLimit: limit });
 
         await setting.save();
 
