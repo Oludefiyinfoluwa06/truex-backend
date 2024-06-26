@@ -6,8 +6,12 @@ const registerUser = async (req, res) => {
     const { username, referrer } = req.body;
 
     try {
+        const existingUser = await User.findOne({ username });
+        
+        if (existingUser) return res.status(400).json({ success: false, message: 'Username already exists' });
+        
         const newUser = new User({ username });
-
+        
         if (referrer) {
             referringUser = await User.findOne({ referrer });
             newUser.referrer = referrer;
