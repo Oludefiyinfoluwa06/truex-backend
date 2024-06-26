@@ -3,7 +3,7 @@ const Setting = require('../models/setting');
 const setGlobalEarningLimit = async (req, res) => {
     const { newLimit } = req.body;
 
-    if (typeof newLimit !== 'number' || newLimit <= 0) {
+    if (newLimit <= 0) {
         return res.status(400).json({ success: false, message: 'Invalid earning limit value' });
     }
 
