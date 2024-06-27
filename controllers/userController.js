@@ -79,7 +79,7 @@ const earnCoins = async (req, res) => {
         user.coins += coinsEarned;
         await user.save();
 
-        res.json({ success: true, message: 'Coins earned successfully' });
+        res.json({ success: true, message: 'Coins earned successfully', user });
     } catch (err) {
         console.error(err);
         res.status(500).json({ success: false, message: 'Error earning coins' });
