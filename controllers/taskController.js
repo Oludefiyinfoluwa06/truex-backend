@@ -41,23 +41,22 @@ const completeTask = async (req, res) => {
     const { userId, taskId } = req.body;
 
     try {
-        const task = await Task.findById(taskId);
-        if (!task) {
-            return res.status(404).json({ success: false, message: 'Task not found' });
-        }
-
-        if (task.completedBy.includes(userId)) {
-            return res.status(400).json({ success: false, message: 'Task already completed by this user' });
-        }
-
-        task.completedBy.push(userId);
-        await task.save();
-
         const user = await User.findById(userId);
-        user.totalCoins += task.reward;
+        const task = await Task.findById(taskId);
+
+        if (!user || !task) {
+            return res.status(404).json({ success: false, message: 'User or Task not found' });
+        }
+
+        if (user.completedTasks.includes(taskId)) {
+            return res.status(400).json({ success: false, message: 'Task already completed' });
+        }
+
+        user.completedTasks.push(taskId);
+        user.coins += task.reward;
         await user.save();
 
-        res.json({ success: true, message: 'Task completed successfully' });
+        res.json({ success: true, message: 'Task completed successfully', user });
     } catch (err) {
         console.error(err);
         res.status(500).json({ success: false, message: 'Error completing task' });

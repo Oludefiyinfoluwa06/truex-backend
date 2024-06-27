@@ -1,6 +1,11 @@
 const User = require('../models/user');
 const Setting = require('../models/setting');
-const getTotalCoins = require('../utils/coinUtils');
+
+const getTotalCoins = async () => {
+    const users = await User.find();
+    const totalCoins = users.reduce((sum, user) => sum + user.coins, 0);
+    return totalCoins;
+};
 
 const registerUser = async (req, res) => {
     const { username, referrer } = req.body;
@@ -13,7 +18,7 @@ const registerUser = async (req, res) => {
         const newUser = new User({ username });
 
         if (referrer) {
-            referringUser = await User.findOne({ referrer });
+            referringUser = await User.findById({ _id: referrer });
             referringUser.referrals.push(newUser._id);
             await referringUser.save();
         }
@@ -64,10 +69,10 @@ const earnCoins = async (req, res) => {
             return res.status(404).json({ success: false, message: 'User not found' });
         }
 
-        const settings = await Setting.findOne();
+        const setting = await Setting.findOne();
         const totalCoins = await getTotalCoins();
 
-        if (totalCoins + coinsEarned > settings.globalEarningLimit) {
+        if (totalCoins > setting.globalEarningLimit) {
             return res.status(400).json({ success: false, message: 'Global earning limit reached. Cannot earn more coins.' });
         }
 

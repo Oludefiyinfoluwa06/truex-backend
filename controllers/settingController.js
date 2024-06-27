@@ -21,6 +21,20 @@ const setGlobalEarningLimit = async (req, res) => {
     }
 };
 
+const getGlobalEarningLimit = async (req, res) => {
+    try {
+        const setting = await Setting.findOne();
+        if (!setting) {
+            return res.status(404).json({ success: false, message: 'Global earning limit not set' });
+        }
+        res.json({ success: true, globalEarningLimit: setting.globalEarningLimit });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false, message: 'Error fetching global earning limit' });
+    }
+};
+
 module.exports = {
-    setGlobalEarningLimit
+    setGlobalEarningLimit,
+    getGlobalEarningLimit
 };
