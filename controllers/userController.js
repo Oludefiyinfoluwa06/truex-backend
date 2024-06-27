@@ -11,10 +11,9 @@ const registerUser = async (req, res) => {
         if (existingUser) return res.status(400).json({ success: false, message: 'Username already exists' });
         
         const newUser = new User({ username });
-        
+
         if (referrer) {
             referringUser = await User.findOne({ referrer });
-            newUser.referrer = referrer;
             referringUser.referrals.push(newUser._id);
             await referringUser.save();
         }
