@@ -53,7 +53,7 @@ const completeTask = async (req, res) => {
         }
 
         user.completedTasks.push(taskId);
-        user.coins += task.reward;
+        user.totalCoins += task.reward;
         await user.save();
 
         res.json({ success: true, message: 'Task completed successfully', user });
