@@ -11,7 +11,7 @@ const settingRoutes = require('./routes/setting');
 const app = express();
 
 const corsOptions ={
-    origin: 'https://truexgold-users.vercel.app',
+    origin: ['https://truexgold-users.vercel.app', 'https://truexgold-admin.vercel.app'],
     credentials: true,
     optionSuccessStatus: 200
 }
