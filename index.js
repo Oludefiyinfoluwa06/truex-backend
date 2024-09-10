@@ -10,18 +10,18 @@ const settingRoutes = require('./routes/setting');
 
 const app = express();
 
-const corsOptions ={
-    origin: [
-        'https://truexgold-users.vercel.app', 
-        'https://truexgold-admin.vercel.app',
-        'http://192.168.163.21:5173/',
-        'http://localhost:5173/',
-    ],
-    credentials: true,
-    optionSuccessStatus: 200
-}
+// const corsOptions ={
+//     origin: [
+//         'https://truexgold-users.vercel.app',
+//         'https://truexgold-admin.vercel.app',
+//         'http://192.168.163.21:5173/',
+//         'http://localhost:5173/',
+//     ],
+//     credentials: true,
+//     optionSuccessStatus: 200
+// }
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
