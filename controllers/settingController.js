@@ -14,10 +14,10 @@ const setGlobalEarningLimit = async (req, res) => {
             { new: true, upsert: true }
         );
 
-        res.json({ success: true, message: 'Global earning limit updated successfully', setting: updatedSetting });
+        return res.json({ success: true, message: 'Global earning limit updated successfully', setting: updatedSetting });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ success: false, message: 'Error updating global earning limit' });
+        return res.status(500).json({ success: false, message: 'Error updating global earning limit' });
     }
 };
 
@@ -27,10 +27,10 @@ const getGlobalEarningLimit = async (req, res) => {
         if (!setting) {
             return res.status(404).json({ success: false, message: 'Global earning limit not set' });
         }
-        res.json({ success: true, globalEarningLimit: setting.globalEarningLimit });
+        return res.json({ success: true, globalEarningLimit: setting.globalEarningLimit });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ success: false, message: 'Error fetching global earning limit' });
+        return res.status(500).json({ success: false, message: 'Error fetching global earning limit' });
     }
 };
 

@@ -1,22 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const Task = require('../models/task');
 const Admin = require('../models/admin');
 const transporter = require('../config/emailConfig');
-
-const createTask = async (req, res) => {
-    const { title, description, reward } = req.body;
-
-    try {
-        const newTask = new Task({ title, description, reward });
-        await newTask.save();
-
-        res.json({ success: true, message: 'Task created successfully', task: newTask });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ success: false, message: 'Error creating task' });
-    }
-};
 
 const loginAdmin = async (req, res) => {
     const { email, password } = req.body;
@@ -37,10 +22,10 @@ const loginAdmin = async (req, res) => {
 
         const { password: _, ...adminWithoutPassword } = admin.toObject();
 
-        res.json({ success: true, message: 'Login successful', token, admin: adminWithoutPassword });
+        return res.json({ success: true, message: 'Login successful', token, admin: adminWithoutPassword });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ success: false, message: 'Error logging in' });
+        return res.status(500).json({ success: false, message: 'Error logging in' });
     }
 };
 
@@ -71,10 +56,10 @@ const requestResetCode = async (req, res) => {
 
         await transporter.sendMail(mailOptions);
 
-        res.json({ success: true, message: 'Reset code sent to your email' });
+        return res.json({ success: true, message: 'Reset code sent to your email' });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ success: false, message: 'Error sending reset code' });
+        return res.status(500).json({ success: false, message: 'Error sending reset code' });
     }
 };
 
@@ -99,15 +84,14 @@ const resetPassword = async (req, res) => {
         admin.resetCode = null;
         await admin.save();
 
-        res.json({ success: true, message: 'Password reset successfully' });
+        return res.json({ success: true, message: 'Password reset successfully' });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ success: false, message: 'Error resetting password' });
+        return res.status(500).json({ success: false, message: 'Error resetting password' });
     }
 };
 
 module.exports = {
-    createTask,
     loginAdmin,
     requestResetCode,
     resetPassword

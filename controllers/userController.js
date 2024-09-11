@@ -12,9 +12,9 @@ const registerUser = async (req, res) => {
 
     try {
         const existingUser = await User.findOne({ username });
-        
+
         if (existingUser) return res.status(400).json({ success: false, message: 'Username already exists' });
-        
+
         const newUser = new User({ username });
 
         if (referrer) {
@@ -25,10 +25,10 @@ const registerUser = async (req, res) => {
 
         await newUser.save();
 
-        res.json({ success: true, message: 'User registered successfully', user: newUser });
+        return res.json({ success: true, message: 'User registered successfully', user: newUser });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ success: false, message: 'Error registering user' });
+        return res.status(500).json({ success: false, message: 'Error registering user' });
     }
 };
 
@@ -42,20 +42,28 @@ const getUserData = async (req, res) => {
             return res.status(404).json({ success: false, message: 'User not found' });
         }
 
-        res.json({ success: true, user });
+        return res.json({ success: true, user });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ success: false, message: 'Error fetching user data' });
+        return res.status(500).json({ success: false, message: 'Error fetching user data' });
     }
 };
 
 const getAllUsers = async (req, res) => {
     try {
         const users = await User.find().select('-password');
-        res.json({ success: true, users });
+
+        const userWithMostReferrals = await User.findOne().sort({ referrals: -1 }).select('-password');
+
+        return res.json({
+            success: true,
+            users,
+            totalPlayers: users.length,
+            userWithMostReferrals
+        });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ success: false, message: 'Error fetching users' });
+        return res.status(500).json({ success: false, message: 'Error fetching users' });
     }
 };
 
@@ -79,10 +87,10 @@ const earnCoins = async (req, res) => {
         user.coins += coinsEarned;
         await user.save();
 
-        res.json({ success: true, message: 'Coins earned successfully', user });
+        return res.json({ success: true, message: 'Coins earned successfully', user });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ success: false, message: 'Error earning coins' });
+        return res.status(500).json({ success: false, message: 'Error earning coins' });
     }
 };
 
@@ -103,10 +111,10 @@ const updateUserCoins = async (req, res) => {
         user.coins = 0
         await user.save();
 
-        res.json({ success: true, message: 'User coins updated successfully', user });
+        return res.json({ success: true, message: 'User coins updated successfully', user });
     } catch (err) {
         console.error(err);
-        res.status(500).json({ success: false, message: 'Error updating user coins' });
+        return res.status(500).json({ success: false, message: 'Error updating user coins' });
     }
 };
 
